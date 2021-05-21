@@ -8,7 +8,7 @@ const ModalWrapper=({visible,setmodalstate,layout,keyboardHeight})=>{
 	const getHeight=exactheight-(layout.y);
 	const checkhalf=(getHeight)<((exactheight)/2);
 	const keyboardHeightcalc=(exactheight*layout.y)/(exactheight);
-	const bottomheight=exactheight-(layout.y+layout.height+33.3);
+	const bottomheight=exactheight-(layout.y+layout.height+((keyboardHeight?33.3:0)));
 	console.log("getbottomHeight",exactheight);
 	console.log("getbottomHeight",bottomheight,layout.y);
 	const styleprops=checkhalf?{position:'absolute',left:layout.x,bottom:bottomheight>=0?bottomheight:0,backgroundColor:'white',width:layout.width}:{position:'absolute',left:layout.x,top:((layout.y)),backgroundColor:'white',width:layout.width}
