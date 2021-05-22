@@ -13,10 +13,10 @@ function DropDownSearch() {
     }
   return (
    
-    <ScrollView>
+    <ScrollView  keyboardShouldPersistTaps='always'>
     {arrayofdata_state.map((obj,index)=>{
         return(
-     <DropDownComp arrow={true} onPress={(data)=>updateData(data,index)} value={obj.active} activestyles={{backgroundColor:'grey',color:'white'}} placeholder={"Enter Your Name"} items={items} errormessage="No Data Found"/>
+     <DropDownComp key={`drop_index_${index+1}`} arrow={true} onPress={(data)=>updateData(data,index)} value={obj.active} activestyles={{backgroundColor:'grey',color:'white'}} placeholder={"Enter Your Name"} items={items} errormessage="No Data Found"/>
             )
     })}
       </ScrollView>
