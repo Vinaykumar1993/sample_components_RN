@@ -74,7 +74,9 @@ export const useKeyboard = (): [number] => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   function onKeyboardDidShow(e: KeyboardEvent): void {
+
     setKeyboardHeight(e.endCoordinates.height);
+
   }
 
   function onKeyboardDidHide(): void {
@@ -107,9 +109,7 @@ const DropDownComp=(props)=>{
     setFilterItems([...props.items]);
   },[props.items])
   useEffect(()=>{
-    if(keyboardHeight==0){
-      // setmodalstate(false);
-    }
+
   },[keyboardHeight])
 	const onLayout=(event)=>{
     console.log("position updating........")
