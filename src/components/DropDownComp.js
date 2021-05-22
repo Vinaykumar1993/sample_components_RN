@@ -127,7 +127,7 @@ const DropDownComp=(props)=>{
   }
 	return(
 		<View style={styles.container} >			
-		<View style={styles.wrapper} ref={ref}
+		<View style={[styles.wrapper,{...props.styles}]} ref={ref}
   onLayout={e => {
   	onLayout(e);
     ref.current.measureInWindow(onLayoutupdateheight);
