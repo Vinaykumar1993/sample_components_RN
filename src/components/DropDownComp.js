@@ -19,8 +19,8 @@ const ModalWrapper=({visible,setmodalstate,layout,keyboardHeight,newinputref,act
 	console.log("getbottomHeight",bottomheight,layout.y);
 	const styleprops=checkhalf?{position:'absolute',left:layout.x,bottom:bottomheight>=0?bottomheight:0,backgroundColor:'transparent',width:layout.width}:{position:'absolute',left:layout.x,top:((layout.y)),backgroundColor:'transparent',width:layout.width}
   return (
-  	<Modal onShow={()=>newinputref.current.focus()} animationType={'slide'} visible={visible} onRequestClose={()=>{setmodalstate(false);rest.onSearchText("");}} transparent={true}>
-      <TouchableOpacity style={{flex:1}} onPress={()=>setmodalstate(false)}>
+  	<Modal onShow={()=>newinputref.current.focus()} animationType={'fade'} visible={visible} onRequestClose={()=>{setmodalstate(false);rest.onSearchText("");}} transparent={true}>
+      <TouchableOpacity activeOpacity={1} style={{flex:1}} onPress={()=>setmodalstate(false)}>
         	
         <View style={[styleprops]}>
         {!checkhalf&&
