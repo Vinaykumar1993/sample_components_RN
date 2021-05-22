@@ -10,22 +10,21 @@ const renderTextInput=(placeholder,setmodalstate,newinputref,rest)=>{
   )
 }
 const ModalWrapper=({visible,setmodalstate,layout,keyboardHeight,newinputref,activestyles,placeholder,...rest})=>{
-	const exactheight=(windowHeight-keyboardHeight);
+  
+	const exactheight=(rest.screenheight);
 	const getHeight=exactheight-(layout.y);
-  // console.log("gg",layout.y,windowHeight/2);
+  console.log("gg",exactheight);
+ 
 	const checkhalf=(layout.y+layout.height+50)>(windowHeight/2);
 	const keyboardHeightcalc=((exactheight*layout.y))/(exactheight);
-	const bottomheight=exactheight-(layout.y+layout.height+(keyboardHeight?StatusBar.currentHeight:0));
-	// console.log("getbottomHeight",bottomheight);
+	const bottomheight=exactheight-layout.y-layout.height;
+	console.log("getbottomHeight",bottomheight);
 	// console.log("getbottomHeight",bottomheight,layout.y);
 	const styleprops=checkhalf?{position:'absolute',left:layout.x,bottom:bottomheight>=0?bottomheight:0,backgroundColor:'transparent',width:layout.width}:{position:'absolute',left:layout.x,top:((layout.y)),backgroundColor:'transparent',width:layout.width}
   return (
-  	<Modal animationType={'fade'} visible={visible} onRequestClose={()=>{setmodalstate(false);rest.onSearchText("");}} transparent={true}>
-     <KeyboardAvoidingView
-     style={{flex:1}}
-    
-  >
-      <TouchableOpacity activeOpacity={1} style={{flex:1}} onPress={()=>setmodalstate(false)}>
+  	<Modal  animationType={'fade'} visible={visible} onRequestClose={()=>{setmodalstate(false);rest.onSearchText("");}} transparent={true}>
+
+      <TouchableOpacity ref={rest.usemodalref} activeOpacity={1} style={{flex:1}} onPress={()=>setmodalstate(false)}>
         	
         <View style={[styleprops]}>
         {!checkhalf&&
@@ -66,7 +65,7 @@ const ModalWrapper=({visible,setmodalstate,layout,keyboardHeight,newinputref,act
         </View>
        
         </TouchableOpacity>
-        </KeyboardAvoidingView>
+
         </Modal>
   );
 }
@@ -101,6 +100,8 @@ const DropDownComp=(props)=>{
 	const [layout,setlayout]=useState(null);
 	const [modalstate,setmodalstate]=useState(false);
   const [items,setItems]= useState([]);
+  const [screenheight,setscreenheight]= useState(windowHeight);
+  const usemodalref=useRef();
   const [filter_items,setFilterItems]= useState([]);
 	 const [keyboardHeight] = useKeyboard();
 
@@ -118,11 +119,21 @@ const DropDownComp=(props)=>{
 		setlayout({x:x,y:y,width:width,height:height})
 	}
 	const onLayoutupdateheight=(x,y,height,width,px, py)=>{
-		// console.log('x',px,py)
 		setlayout((data)=>{
 			return {...data,x:x,y:y}
 		})
 	}
+  useEffect(()=>{
+    if(modalstate==true){
+      setTimeout(()=>{   
+       usemodalref&&usemodalref.current&&usemodalref.current.measureInWindow((x,y,width,height)=>{
+        // console.log("modalheight",height)
+        ref.current.measureInWindow(onLayoutupdateheight);
+        setscreenheight(height);
+      })
+      },100)
+    }else{}
+  },[keyboardHeight])
 	const getcurrentFoucs=()=>{
 			inputref.current.focus();
     console.log("calling.........")
@@ -151,7 +162,7 @@ const DropDownComp=(props)=>{
   {props.arrow&&<TouchableOpacity style={{position:'absolute',right:0,top:12,right:10}}><Image source={{uri:"https://static.thenounproject.com/png/22174-200.png"}} style={{width:25,height:25,resizeMode: 'cover'}}/></TouchableOpacity>}
 		</View>
 		{layout&&modalstate&&
-			<ModalWrapper onSearchText={(value)=>filterItmes(value)} itemsData={items} {...props} activestyles={props.activestyles} newinputref={newinputref} visible={modalstate} setmodalstate={setmodalstate} layout={layout} keyboardHeight={keyboardHeight}/>
+			<ModalWrapper screenheight={screenheight} usemodalref={usemodalref} onSearchText={(value)=>filterItmes(value)} itemsData={items} {...props} activestyles={props.activestyles} newinputref={newinputref} visible={modalstate} setmodalstate={setmodalstate} layout={layout} keyboardHeight={keyboardHeight}/>
 		}
 		</View>
 		)
