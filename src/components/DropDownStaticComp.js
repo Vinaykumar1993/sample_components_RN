@@ -1,6 +1,7 @@
 import React,{useRef,useState,useEffect} from 'react';
+import AnimatedTextInput from './AnimatedTextInput';
 import {Animated,Text,View,TextInput,Modal,ScrollView,TouchableOpacity,Dimensions,Keyboard, KeyboardEvent,KeyboardAvoidingView,Image,StatusBar,StyleSheet} from 'react-native';
-const DropDownStaticComp=({setFocus,show,index,items,activeData,activeStyle,onsetActive,placeholder,textinputStyle,dropdownItemTextStyle,dropdownItemStyle,dropdownContainerStyle})=>{
+const DropDownStaticComp=({setFocus,show,index,items,activeData,activeStyle,onsetActive,placeholder,textinputStyle,dropdownItemTextStyle,dropdownItemStyle,dropdownContainerStyle,...rest})=>{
 
 	const [items_data,setItems] = useState(null);
 	const [filter_items_data,setFilterItems] = useState(null);
@@ -15,11 +16,11 @@ const DropDownStaticComp=({setFocus,show,index,items,activeData,activeStyle,onse
   }
 	return(
 			<View>
-			{!show&&
-    		<TextInput value={activeData&&activeData.label} placeholder={placeholder} onChangeText={(data)=>filterItmes(data)} onFocus={()=>setFocus(true)} onEndEditing={()=>setFocus(false)}  style={[{borderWidth:1,height:50,paddingHorizontal:15,borderRadius:10},{...textinputStyle}]}/>
+			{!show&&(rest.floating?
+    		<AnimatedTextInput  value={activeData&&activeData.label} placeholder_text={placeholder} onChangeText={(data)=>filterItmes(data)} onFocus={()=>setFocus(true)} onEndEditing={()=>setFocus(false)}  style={[{borderWidth:1,height:50,paddingHorizontal:15,borderRadius:10},{...textinputStyle}]}/>:<TextInput  value={activeData&&activeData.label} placeholder={placeholder} onChangeText={(data)=>filterItmes(data)} onFocus={()=>setFocus(true)} onEndEditing={()=>setFocus(false)}  style={[{borderWidth:1,height:50,paddingHorizontal:15,borderRadius:10},{...textinputStyle}]}/>)
 		}
 			{show&&
-    		<TextInput autoFocus={true} placeholder={placeholder} onChangeText={(data)=>filterItmes(data)} onFocus={()=>setFocus(true)} onEndEditing={()=>setFocus(false)}  style={[{borderWidth:1,height:50,paddingHorizontal:15,borderRadius:10},{...textinputStyle}]}/>
+    		<TextInput value={null}  placeholder={placeholder} onChangeText={(data)=>filterItmes(data)} onFocus={()=>setFocus(true)} onEndEditing={()=>setFocus(false)}  style={[{borderWidth:1,height:50,paddingHorizontal:15,borderRadius:10},{...textinputStyle}]}/>
 		}
     {show&&
     	<View style={{borderWidth:1,paddingVertical:5,borderRadius:10,marginTop:15,...dropdownContainerStyle}}>

@@ -15,8 +15,8 @@ function DropDownSearch() {
     // const usedynref=React.useRef();
   return (
    
-    <ScrollView nestedScrollEnabled = {true}  keyboardShouldPersistTaps='always' style={{margin:12}}>
-            <DropDownStaticComp  textinputStyle={null} dropdownContainerStyle={null} dropdownItemStyle={null} dropdownItemTextStyle={null} activeData={active} activeStyle={{backgroundColor:'blue',color:'white',borderRadius:0}} onsetActive={(data)=>setActiveData(data)} show={enable} items={items} placeholder="RN Placeholder"  setFocus={setenable} />
+    <ScrollView  nestedScrollEnabled = {true}  keyboardShouldPersistTaps='always' style={{margin:12}}>
+            <DropDownStaticComp floating={true}  textinputStyle={null} dropdownContainerStyle={null} dropdownItemStyle={null} dropdownItemTextStyle={null} activeData={active} activeStyle={{backgroundColor:'blue',color:'white',borderRadius:0}} onsetActive={(data)=>setActiveData(data)} show={enable} items={items} placeholder="RN Placeholder"  setFocus={setenable} />
       </ScrollView>
   );
 }
